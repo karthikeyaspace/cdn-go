@@ -28,6 +28,7 @@ var (
 	once     sync.Once
 )
 
+
 func LoadConfig() *Config {
 	once.Do(func() {
 		if err := godotenv.Load(); err != nil {
