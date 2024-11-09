@@ -21,3 +21,25 @@ func UploadToS3(key string, file io.Reader) error {
 
 	return err
 }
+
+func GetFilesFromS3(key string) ([]byte, error) {
+	s3Client := config.GetS3Client()
+	cfg := config.LoadConfig()
+
+	file, err := s3Client.GetObject(context.TODO(), &s3.GetObjectInput{
+		Bucket: aws.String(cfg.BucketName),
+		Key:    aws.String(key),
+	})
+
+	if err != nil {
+		return nil, err
+	}
+	defer file.Body.Close()
+
+	fileContent, err := io.ReadAll(file.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return fileContent, nil
+}

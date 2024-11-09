@@ -27,7 +27,8 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 
 	defer styleFile.Close()
 
-	key := xid.New().String()[:10]
+	key := xid.New().String()[:5]
+
 	indexFileKey := fmt.Sprintf("%v/index.html", key)
 	styleFileKey := fmt.Sprintf("%v/style.css", key)
 
