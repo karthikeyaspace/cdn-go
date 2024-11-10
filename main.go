@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/karthikeyaspace/cdn-go/internal/config"
 	"github.com/karthikeyaspace/cdn-go/internal/handler"
+	"github.com/karthikeyaspace/cdn-go/internal/middleware"
 )
 
 func main() {
@@ -20,7 +21,7 @@ func main() {
 
 	server := &http.Server{
 		Addr:    cfg.Port,
-		Handler: router,
+		Handler: middleware.Logger(middleware.CORS(router)),
 	}
 
 	log.Printf("Server running on http://localhost%v", cfg.Port)
